@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎨 Jadi Seniman AI dalam 90 Menit!</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Comic Sans MS', 'Trebuchet MS', sans-serif;
+    background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 25%, #ff7675 50%, #fd79a8 75%, #a29bfe 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    color: #2d3436;
+    line-height: 1.6;
+  }
+
+  /* NAVBAR */
+  nav {
+    position: sticky;
+    top: 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+    padding: 15px 20px;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  nav a {
+    text-decoration: none;
+    color: #2d3436;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 14px;
+    transition: all 0.3s;
+    background: #ffeaa7;
+  }
+
+  nav a:hover {
+    background: #fd79a8;
+    color: white;
+    transform: translateY(-2px);
+  }
+
+  /* HERO */
+  .hero {
+    text-align: center;
+    padding: 60px 20px;
+    color: white;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+  }
+
+  .hero h1 {
+    font-size: clamp(2em, 6vw, 4em);
+    margin-bottom: 20px;
+    animation: bounce 2s infinite;
+  }
+
+  .hero p {
+    font-size: 1.3em;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  /* SECTIONS */
+  section {
+    max-width: 1000px;
+    margin: 30px auto;
+    background: white;
+    padding: 35px;
+    border-radius: 25px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+  }
+
+  section h2 {
+    color: #6c5ce7;
+    margin-bottom: 20px;
+    font-size: 2em;
+    border-bottom: 4px dashed #fd79a8;
+    padding-bottom: 10px;
+  }
+
+  section h3 {
+    color: #e17055;
+    margin: 20px 0 10px;
+    font-size: 1.4em;
+  }
+
+  section p, section li {
+    font-size: 1.05em;
+    margin-bottom: 8px;
+  }
+
+  section ul {
+    margin-left: 25px;
+    margin-bottom: 15px;
+  }
+
+  /* CARDS */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+  }
+
+  .card {
+    background: linear-gradient(135deg, #a29bfe, #6c5ce7);
+    color: white;
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    transition: transform 0.3s;
+  }
+
+  .card:hover {
+    transform: translateY(-5px) rotate(-2deg);
+  }
+
+  .card .emoji { font-size: 2.5em; }
+
+  /* ANALOGY TABLE */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 2px solid #f0f0f0;
+  }
+
+  th {
+    background: #fd79a8;
+    color: white;
+  }
+
+  tr:nth-child(even) { background: #fff5f8; }
+
+  /* FORMULA BOX */
+  .formula {
+    background: linear-gradient(135deg, #00cec9, #00b894);
+    color: white;
+    padding: 25px;
+    border-radius: 20px;
+    text-align: center;
+    font-size: 1.3em;
+    font-weight: bold;
+    margin: 20px 0;
+    box-shadow: 0 5px 20px rgba(0,184,148,0.3);
+  }
+
+  /* PROMPT EXAMPLES */
+  .prompt-box {
+    background: #fff5f8;
+    border-left: 5px solid #fd79a8;
+    padding: 12px 15px;
+    margin: 10px 0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-family: 'Courier New', monospace;
+  }
+
+  .prompt-box:hover {
+    background: #fd79a8;
+    color: white;
+    transform: translateX(10px);
+  }
+
+  .level-easy { border-left-color: #00b894; }
+  .level-medium { border-left-color: #fdcb6e; }
+  .level-hard { border-left-color: #e17055; }
+
+  .level-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+    margin-right: 8px;
+  }
+
+  .badge-easy { background: #00b894; }
+  .badge-medium { background: #fdcb6e; }
+  .badge-hard { background: #e17055; }
+
+  /* ETHICS */
+  .ethics-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    margin: 8px 0;
+    border-radius: 10px;
+    gap: 15px;
+  }
+
+  .ethics-ok { background: #d4f5e9; border-left: 5px solid #00b894; }
+  .ethics-no { background: #ffe0e0; border-left: 5px solid #e17055; }
+
+  .ethics-icon { font-size: 1.8em; }
+
+  /* GENERATOR */
+  .generator-section {
+    background: linear-gradient(135deg, #ff7675, #fd79a8, #a29bfe);
+    color: white;
+  }
+
+  .generator-section h2 {
+    color: white;
+    border-bottom-color: white;
+  }
+
+  .generator-box {
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    padding: 25px;
+    border-radius: 20px;
+    margin-top: 20px;
+  }
+
+  .input-area {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 15px;
+  }
+
+  #prompt {
+    padding: 14px 20px;
+    width: 100%;
+    max-width: 450px;
+    font-size: 16px;
+    border: 3px solid white;
+    border-radius: 30px;
+    outline: none;
+    font-family: inherit;
+  }
+
+  #generateBtn {
+    padding: 14px 30px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 30px;
+    background: #ffeaa7;
+    color: #2d3436;
+    font-weight: bold;
+    transition: all 0.3s;
+    font-family: inherit;
+  }
+
+  #generateBtn:hover:not(:disabled) {
+    background: #fdcb6e;
+    transform: scale(1.05);
+  }
+
+  #generateBtn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .quick-prompts {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 15px 0;
+  }
+
+  .quick-prompt {
+    background: rgba(255,255,255,0.3);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 13px;
+    border: 2px solid white;
+    transition: all 0.3s;
+  }
+
+  .quick-prompt:hover {
+    background: white;
+    color: #6c5ce7;
+  }
+
+  #loading {
+    margin-top: 20px;
+    display: none;
+    font-size: 1.2em;
+    animation: pulse 1.5s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  .result-area {
+    margin-top: 25px;
+    text-align: center;
+  }
+
+  #result {
+    max-width: 100%;
+    width: 400px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    display: none;
+  }
+
+  .error-msg {
+    background: rgba(255,255,255,0.9);
+    color: #e17055;
+    padding: 15px;
+    border-radius: 15px;
+    margin-top: 15px;
+    display: none;
+    font-weight: bold;
+  }
+
+  /* CHECKLIST */
+  .checklist {
+    list-style: none !important;
+    margin-left: 0 !important;
+  }
+
+  .checklist li {
+    padding: 8px 0;
+    padding-left: 35px;
+    position: relative;
+  }
+
+  .checklist li::before {
+    content: "✅";
+    position: absolute;
+    left: 0;
+    font-size: 1.2em;
+  }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 40px 20px;
+    color: white;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    font-size: 1.1em;
+  }
+
+  /* GOLDEN RULES */
+  .rules {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+  }
+
+  .rule {
+    background: linear-gradient(135deg, #fdcb6e, #e17055);
+    color: white;
+    padding: 25px;
+    border-radius: 20px;
+    text-align: center;
+  }
+
+  .rule .big { font-size: 3em; }
+  .rule h4 { font-size: 1.5em; margin: 10px 0; }
+
+  @media (max-width: 600px) {
+    section { padding: 25px 20px; margin: 20px 10px; }
+    .hero { padding: 40px 20px; }
+    nav { padding: 10px; }
+    nav a { font-size: 12px; padding: 6px 10px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <a href="#hero">🏠 Home</a>
+  <a href="#pembukaan">🎬 Mulai</a>
+  <a href="#dasar">🧠 Materi</a>
+  <a href="#praktik">🎨 Prompt</a>
+  <a href="#generator">🤖 Demo AI</a>
+  <a href="#etika">⚖️ Etika</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero" id="hero">
+  <h1>🎨 Jadi Seniman AI! 🤖</h1>
+  <p>Yuk belajar bikin gambar keren pakai AI dalam 90 menit! Siap-siap jadi AI Artist Cilik! ✨</p>
+</div>
+
+<!-- PEMBUKAAN -->
+<section id="pembukaan">
+  <h2>🎬 1. Pembukaan — AI Ada di Sekitar Kita!</h2>
+  <p>Pernah nggak kalian ketemu AI hari ini? Coba lihat contoh-contoh ini:</p>
+  <div class="card-grid">
+    <div class="card">
+      <div class="emoji">📱</div>
+      <strong>Filter TikTok</strong>
+      <p>Yang bikin wajah jadi kucing!</p>
+    </div>
+    <div class="card">
+      <div class="emoji">🎵</div>
+      <strong>Rekomendasi YouTube</strong>
+      <p>Tahu video favorit kalian!</p>
+    </div>
+    <div class="card">
+      <div class="emoji">🎮</div>
+      <strong>Game Pintar</strong>
+      <p>Musuhnya makin jago!</p>
+    </div>
+    <div class="card">
+      <div class="emoji">🗣️</div>
+      <strong>Google Assistant</strong>
+      <p>Jawab pertanyaan kalian</p>
+    </div>
+  </div>
+  <p><strong>Keren kan?</strong> Hari ini kita belajar bikin AI gambar sendiri! 🎉</p>
+</section>
+
+<!-- PENJELASAN DASAR -->
+<section id="dasar">
+  <h2>🧠 2. Apa itu AI Generative Image?</h2>
+  <p>Bayangin kalian punya teman yang udah liat <strong>JUTAAN gambar</strong> di dunia — gambar kucing, mobil, robot, naga, semuanya! Kalau kalian bilang:</p>
+  <div class="formula">💬 "Gambarin aku kucing naik motor di bulan!" 🚀</div>
+  <p>Dia bisa langsung bikin gambarnya dalam hitungan detik! <strong>Itulah AI Generative Image!</strong></p>
+
+  <h3>🍳 Analogi: AI itu Koki Ajaib!</h3>
+  <table>
+    <tr><th>Memasak 🍳</th><th>AI Gambar 🎨</th></tr>
+    <tr><td>Bahan-bahan (telur, tepung)</td><td>Jutaan gambar yang dipelajari AI</td></tr>
+    <tr><td>Resep dari kita</td><td><strong>Prompt</strong> (perintah kita)</td></tr>
+    <tr><td>Koki memasak</td><td>AI memproses</td></tr>
+    <tr><td>Kue jadi! 🎂</td><td>Gambar jadi! 🖼️</td></tr>
+  </table>
+  <p><strong>💡 Kunci penting:</strong> Kalau resep kita jelas, kuenya enak. Kalau perintah kita jelas, gambarnya keren!</p>
+
+  <h3>🎯 Istilah Penting (cuma 1!)</h3>
+  <div class="formula">PROMPT = Perintah yang kita kasih ke AI 📝</div>
+</section>
+
+<!-- PRAKTIK PROMPT -->
+<section id="praktik">
+  <h2>🎨 3. Rumus Prompt Ajaib!</h2>
+  <div class="formula">
+    [SUBJEK] + [AKSI] + [TEMPAT] + [GAYA GAMBAR] ✨
+  </div>
+  <p><strong>Contoh:</strong> Gajah <em>(subjek)</em> + main basket <em>(aksi)</em> + di bulan <em>(tempat)</em> + gaya kartun <em>(gaya)</em></p>
+
+  <h3>📝 Contoh Prompt Siap Coba! (Klik untuk salin ke generator)</h3>
+
+  <h4>🟢 Level Mudah</h4>
+  <div class="prompt-box level-easy" onclick="usePrompt(this)">
+    <span class="level-badge badge-easy">MUDAH</span>Kucing lucu pakai topi ulang tahun
+  </div>
+  <div class="prompt-box level-easy" onclick="usePrompt(this)">
+    <span class="level-badge badge-easy">MUDAH</span>Robot kecil minum es krim di taman
+  </div>
+
+  <h4>🟡 Level Sedang</h4>
+  <div class="prompt-box level-medium" onclick="usePrompt(this)">
+    <span class="level-badge badge-medium">SEDANG</span>Bebek pakai jas hujan naik sepeda di hutan, gaya kartun
+  </div>
+  <div class="prompt-box level-medium" onclick="usePrompt(this)">
+    <span class="level-badge badge-medium">SEDANG</span>Nasi goreng raksasa jadi gunung, ada orang hiking di atasnya
+  </div>
+
+  <h4>🔴 Level Seru (Bikin Ngakak!)</h4>
+  <div class="prompt-box level-hard" onclick="usePrompt(this)">
+    <span class="level-badge badge-hard">SERU</span>Guru matematika tapi bentuknya kentang, mengajar di kelas penuh wortel
+  </div>
+  <div class="prompt-box level-hard" onclick="usePrompt(this)">
+    <span class="level-badge badge-hard">SERU</span>Superhero Indonesia pakai sarung dan peci, terbang di atas Monas, gaya komik
+  </div>
+  <div class="prompt-box level-hard" onclick="usePrompt(this)">
+    <span class="level-badge badge-hard">SERU</span>Pak Satpam sekolah jadi ninja, melompat di atas pohon mangga, gaya anime
+  </div>
+</section>
+
+<!-- GENERATOR - DEMO LANGSUNG -->
+<section id="generator" class="generator-section">
+  <h2>🤖 4. Demo Langsung — Coba Generate Sekarang!</h2>
+  <p style="font-size: 1.1em;">Sekarang giliran kalian! Ketik prompt di bawah dan lihat keajaibannya! ✨</p>
+
+  <div class="generator-box">
+    <div class="input-area">
+      <input type="text" id="prompt" placeholder="Contoh: kucing astronaut lucu di bulan">
+      <button id="generateBtn" onclick="generateImage()">🚀 Generate!</button>
+    </div>
+
+    <div style="text-align: center; font-size: 14px; opacity: 0.9;">
+      💡 <strong>Prompt cepat:</strong>
+    </div>
+    <div class="quick-prompts">
+      <div class="quick-prompt" onclick="setPrompt('cute cat wearing birthday hat, cartoon style')">🎂 Kucing Ultah</div>
+      <div class="quick-prompt" onclick="setPrompt('small robot eating ice cream in park')">🤖 Robot Es Krim</div>
+      <div class="quick-prompt" onclick="setPrompt('duck riding bicycle in forest, cartoon')">🦆 Bebek Sepeda</div>
+      <div class="quick-prompt" onclick="setPrompt('superhero with traditional indonesian sarong flying over monas, comic style')">🦸 Superhero Lokal</div>
+      <div class="quick-prompt" onclick="setPrompt('potato as math teacher teaching carrots in classroom, funny')">🥔 Guru Kentang</div>
+    </div>
+
+    <div id="loading">⏳ AI sedang melukis... tunggu sebentar ya! 🎨</div>
+
+    <div class="error-msg" id="errorMsg"></div>
+
+    <div class="result-area">
+      <img id="result" alt="Hasil AI">
+    </div>
+  </div>
+</section>
+
+<!-- ETIKA -->
+<section id="etika">
+  <h2>⚖️ 5. Etika Pakai AI — BOLEH atau NGGAK?</h2>
+  <p>AI itu kayak sepeda 🚲. Bisa dipakai untuk hal baik atau buruk. Yuk lihat contohnya:</p>
+
+  <div class="ethics-item ethics-ok">
+    <div class="ethics-icon">✅</div>
+    <div>Bikin gambar kucing lucu buat wallpaper HP</div>
+  </div>
+  <div class="ethics-item ethics-no">
+    <div class="ethics-icon">❌</div>
+    <div>Bikin gambar teman sekelas yang memalukan</div>
+  </div>
+  <div class="ethics-item ethics-ok">
+    <div class="ethics-icon">✅</div>
+    <div>Bikin gambar untuk tugas seni, lalu bilang "aku pakai AI"</div>
+  </div>
+  <div class="ethics-item ethics-no">
+    <div class="ethics-icon">❌</div>
+    <div>Bikin gambar AI, terus bilang "aku gambar sendiri" di lomba</div>
+  </div>
+  <div class="ethics-item ethics-ok">
+    <div class="ethics-icon">✅</div>
+    <div>Bikin gambar keluarga versi superhero</div>
+  </div>
+  <div class="ethics-item ethics-no">
+    <div class="ethics-icon">❌</div>
+    <div>Bikin gambar yang menakutkan atau kekerasan</div>
+  </div>
+
+  <h3>🌟 3 Aturan Emas AI</h3>
+  <div class="rules">
+    <div class="rule">
+      <div class="big">🤝</div>
+      <h4>JUJUR</h4>
+      <p>Kalau pakai AI, bilang pakai AI!</p>
+    </div>
+    <div class="rule">
+      <div class="big">💖</div>
+      <h4>HORMATI</h4>
+      <p>Jangan bikin yang menyakiti orang lain</p>
+    </div>
+    <div class="rule">
+      <div class="big">🧠</div>
+      <h4>BIJAK</h4>
+      <p>AI itu alat bantu, bukan pengganti belajar</p>
+    </div>
+  </div>
+</section>
+
+<!-- PENUTUP -->
+<section>
+  <h2>🎉 6. Penutup — Kalian Hebat!</h2>
+  <p style="font-size: 1.2em;">Tahu nggak? <strong>5 tahun lalu, yang kita lakukan hari ini BELUM ADA!</strong> Kalian sekarang udah bisa hal yang dulu cuma bisa dilakukan insinyur dewasa. Bangga sama diri kalian! 🏆</p>
+
+  <h3>💭 Refleksi Yuk!</h3>
+  <ul class="checklist">
+    <li>Apa hal paling seru hari ini?</li>
+    <li>Prompt mana yang bikin kamu kaget hasilnya?</li>
+    <li>Kalau besok bisa bikin gambar AI lagi, mau bikin apa?</li>
+  </ul>
+
+  <h3>🚀 Mini Project Lanjutan</h3>
+  <ul>
+    <li>📖 <strong>Komik AI Sehari-hari</strong> — 4 panel komik tentang sekolah</li>
+    <li>🌱 <strong>Poster Lingkungan</strong> — Kampanye hemat air/buang sampah</li>
+    <li>📚 <strong>Cerita Bergambar</strong> — Tulis cerita, AI yang ilustrasi</li>
+    <li>🦸 <strong>Maskot Kelas</strong> — Desain maskot unik pakai AI</li>
+    <li>💌 <strong>Kartu Ucapan</strong> — Custom untuk keluarga</li>
+  </ul>
+</section>
+
+<footer>
+  <p>🎨 Selamat! Kalian resmi jadi <strong>AI Artist Cilik 2026</strong> ✨</p>
+  <p style="font-size: 0.9em; margin-top: 10px; opacity: 0.9;">Dibuat dengan ❤️ untuk generasi masa depan</p>
+</footer>
+
+<script>
+  // Klik prompt box untuk auto-fill ke generator
+  function usePrompt(element) {
+    const text = element.textContent.replace(/MUDAH|SEDANG|SERU/g, '').trim();
+    document.getElementById('prompt').value = text;
+    document.getElementById('generator').scrollIntoView({ behavior: 'smooth' });
+    // Visual feedback
+    element.style.background = '#00b894';
+    element.style.color = 'white';
+    setTimeout(() => {
+      element.style.background = '';
+      element.style.color = '';
+    }, 500);
+  }
+
+  // Set prompt dari quick button
+  function setPrompt(text) {
+    document.getElementById('prompt').value = text;
+    document.getElementById('prompt').focus();
+  }
+
+  // Tekan Enter untuk generate
+  document.getElementById('prompt').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') generateImage();
+  });
+
+  // Generate Image
+  async function generateImage() {
+    const prompt = document.getElementById("prompt").value.trim();
+    const btn = document.getElementById("generateBtn");
+    const loading = document.getElementById("loading");
+    const result = document.getElementById("result");
+    const errorMsg = document.getElementById("errorMsg");
+
+    if (!prompt) {
+      alert("Isi prompt dulu ya! 😊");
+      return;
+    }
+
+    // Reset UI
+    loading.style.display = "block";
+    result.style.display = "none";
+    errorMsg.style.display = "none";
+    btn.disabled = true;
+    btn.textContent = "⏳ Sedang melukis...";
+
+    try {
+      const res = await fetch("https://api.maelyn.eu/api/ai/character/generate/image", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-maelyn-auth": "sk_ms_cd9c9572a922748dcd001ed9a5a0b7e567207396e0118101"
+        },
+        body: JSON.stringify({ prompt })
+      });
+
+      const data = await res.json();
+
+      if (!data.success) {
+        throw new Error(data.error || "Gagal generate gambar");
+      }
+
+      result.src = data.images[0];
+      result.style.display = "block";
+      result.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    } catch (err) {
+      errorMsg.textContent = "😢 Oops! " + (err.message || "Gagal koneksi. Coba lagi ya!");
+      errorMsg.style.display = "block";
+      console.error(err);
+    } finally {
+      loading.style.display = "none";
+      btn.disabled = false;
+      btn.textContent = "🚀 Generate!";
+    }
+  }
+</script>
+
+</body>
+</html>
